@@ -1,0 +1,71 @@
+<html>
+<head>
+	  <meta charset="UTF-8">
+</head>
+<body>
+	<p>Город</p>
+	<input id="city" type="text" size="20"/> 
+	<button onclick="ok()">OK!</button>
+	<pre></pre>
+	
+<script>
+	var request = new XMLHttpRequest();
+	
+	function responceLoad() 
+	{
+		if (request.readyState == 4) {
+			var status = request.status;
+			if (status == 200) {
+				getInfo(request.responseText);
+			} else {
+				document.write("Server`s answer " + request.statusText);
+			}
+		}
+	}
+	
+	function ok()
+	{
+	var city = document.getElementById('city').value;
+	if (city) 
+		{
+			
+			request.open("GET", "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=0de82b6b4ba5d843dac44bbee4d02543");
+			request.onload = responceLoad;
+			request.send();			
+        }
+	}
+	
+	function getInfo(str)
+	{
+		var last = "";
+		var weather =
+		{
+			city: "",
+			temperature:0,
+			sky:"",
+			pressure:""
+		};
+		
+		var indexCity = str.indexOf("name") + 7;
+		last = str.indexOf('"', indexCity);
+		weather.city = str.substring(indexCity, last);
+		
+		var indexTemperature = str.indexOf("temp") + 6;
+		weather.temperature = str.substring(indexTemperature, indexTemperature + 6);
+		
+		var indexSky = str.indexOf("description") + 14;
+		last = str.indexOf('"', indexSky);
+		weather.sky = str.substring(indexSky, last);
+		
+		var indexPressure = str.indexOf("pressure") + 10;
+		weather.pressure = str.substr(indexPressure, 4);
+		
+		
+		
+		var fn = document.createElement("p");
+            fn.innerHTML = "city: " + weather.city + "</br>temperature: " + weather.temperature + "</br>sky: " + weather.sky + "</br>pressure: " + weather.pressure;
+            document.getElementsByTagName("pre")[0].appendChild(fn);
+	}
+</script>
+</body>
+</html>
