@@ -29,7 +29,7 @@
 	if (city) 
 		{
 			
-			request.open("GET", "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=0de82b6b4ba5d843dac44bbee4d02543");
+			request.open("GET", "http://api.openweathermap.org/data/2.5/weather?q="+city+"&appid=0de82b6b4ba5d843dac44bbee4d02543"); // add string formatting
 			request.onload = responceLoad;
 			request.send();			
         }
@@ -45,6 +45,8 @@
 			sky:"",
 			pressure:""
 		};
+		
+		// parse JSON
 		
 		var indexCity = str.indexOf("name") + 7;
 		last = str.indexOf('"', indexCity);
