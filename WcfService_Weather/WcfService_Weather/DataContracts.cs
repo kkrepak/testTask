@@ -7,7 +7,7 @@ using System.Web;
 
 namespace WcfService_Weather
 {
-    [DataContract(Namespace = "WcfService_Weather")]
+    [DataContract]
     public class RequestData
     {
         [DataMember]
